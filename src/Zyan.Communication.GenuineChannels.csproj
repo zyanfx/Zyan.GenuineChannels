@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461</TargetFrameworks>
+    <RootNamespace>Zyan.Communication.GenuineChannels</RootNamespace>
+    <AssemblyName>Zyan.Communication.GenuineChannels</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GenuineChannels" Version="2.5.9.11" />
+    <PackageReference Include="Zyan" Version="2.15.0" />
+  </ItemGroup>
+
+</Project>
