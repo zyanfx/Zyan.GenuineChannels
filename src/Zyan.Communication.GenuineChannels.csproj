@@ -11,6 +11,11 @@
   <ItemGroup>
     <PackageReference Include="GenuineChannels" Version="2.5.9.11" />
     <PackageReference Include="Zyan" Version="2.15.0" />
+    <PackageReference Include="Zyan.SafeDeserializationHelpers" Version="0.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Runtime.Remoting" />
   </ItemGroup>
 
 </Project>

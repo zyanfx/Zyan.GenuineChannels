@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Serialization.Formatters;
 using Belikov.GenuineChannels.GenuineTcp;
-using Zyan.Communication.Protocols.Tcp.DuplexChannel;
+using Zyan.Communication.Protocols;
 using Zyan.Communication.Toolbox;
+using Zyan.SafeDeserializationHelpers.Channels;
 
 namespace Zyan.Communication.GenuineChannels
 {
@@ -46,7 +46,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		public GenuineTcpClientProtocolSetup(Versioning versioning)
@@ -55,25 +55,27 @@ namespace Zyan.Communication.GenuineChannels
 			_channelName = "GenuineTcpClientProtocolSetup" + Guid.NewGuid().ToString();
 			_versioning = versioning;
 
-			Hashtable formatterSettings = new Hashtable();
-			formatterSettings.Add("includeVersions", _versioning == Versioning.Strict);
-			formatterSettings.Add("strictBinding", _versioning == Versioning.Strict);
+			var formatterSettings = new Hashtable
+            {
+                { "includeVersions", _versioning == Versioning.Strict },
+                { "strictBinding", _versioning == Versioning.Strict }
+            };
 
-			ClientSinkChain.Add(new BinaryClientFormatterSinkProvider(formatterSettings, null));
-			ServerSinkChain.Add(new BinaryServerFormatterSinkProvider(formatterSettings, null) { TypeFilterLevel = TypeFilterLevel.Full });
+			ClientSinkChain.Add(new SafeBinaryClientFormatterSinkProvider(formatterSettings, null));
+			ServerSinkChain.Add(new SafeBinaryServerFormatterSinkProvider(formatterSettings, null) { TypeFilterLevel = TypeFilterLevel.Full });
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		public GenuineTcpClientProtocolSetup()
 			: this(Versioning.Strict)
 		{
-			_channelName = "TcpDuplexClientProtocolSetup" + Guid.NewGuid().ToString();
+			_channelName = "GenuineTcpClientProtocolSetup" + Guid.NewGuid().ToString();
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		public GenuineTcpClientProtocolSetup(bool encryption)
@@ -83,7 +85,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -94,7 +96,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
@@ -110,7 +112,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -127,7 +129,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
@@ -139,7 +141,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -152,7 +154,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
@@ -170,7 +172,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -189,7 +191,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
@@ -203,7 +205,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -218,7 +220,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
@@ -238,7 +240,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -259,7 +261,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
@@ -273,7 +275,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -288,7 +290,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
@@ -308,7 +310,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -329,7 +331,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
@@ -345,7 +347,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -362,7 +364,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
@@ -384,7 +386,7 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the TcpDuplexClientProtocolSetup class.
+		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="versioning">Versioning behavior</param>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
@@ -472,14 +474,7 @@ namespace Zyan.Communication.GenuineChannels
 					throw new ApplicationException("No channel factory specified."); //LanguageResource.ApplicationException_NoChannelFactorySpecified);
 
 				channel = _channelFactory(_channelSettings, BuildClientSinkChain(), BuildServerSinkChain());
-
-				if (!MonoCheck.IsRunningOnMono)
-				{
-					if (RemotingConfiguration.CustomErrorsMode != CustomErrorsModes.Off)
-					{
-						RemotingConfiguration.CustomErrorsMode = CustomErrorsModes.Off;
-					}
-				}
+				RemotingHelper.ResetCustomErrorsMode();
 			}
 
 			return channel;
