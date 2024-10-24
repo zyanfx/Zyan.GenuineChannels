@@ -21,36 +21,6 @@ namespace Zyan.Communication.GenuineChannels
 	{
 		private int _tcpPort = 0;
 		private string _ipAddress = "0.0.0.0";
-		private bool _tcpKeepAliveEnabled = true;
-		private ulong _tcpKeepAliveTime = 30000;
-		private ulong _tcpKeepAliveInterval = 1000;
-
-		/// <summary>
-		/// Enables or disables TCP KeepAlive.
-		/// </summary>
-		public bool TcpKeepAliveEnabled
-		{
-			get { return _tcpKeepAliveEnabled; }
-			set { _tcpKeepAliveEnabled = value; }
-		}
-
-		/// <summary>
-		/// Gets or sets the TCP KeepAlive time in milliseconds.
-		/// </summary>
-		public ulong TcpKeepAliveTime
-		{
-			get { return _tcpKeepAliveTime; }
-			set { _tcpKeepAliveTime = value; }
-		}
-
-		/// <summary>
-		/// Gets or sets the TCP KeepAlive interval in milliseconds
-		/// </summary>
-		public ulong TcpKeepAliveInterval
-		{
-			get { return _tcpKeepAliveInterval; }
-			set { _tcpKeepAliveInterval = value; }
-		}
 
 		/// <summary>
 		/// Gets or sets the TCP port to listen for client calls.
@@ -85,9 +55,11 @@ namespace Zyan.Communication.GenuineChannels
 		{
 			_versioning = versioning;
 
-			Hashtable formatterSettings = new Hashtable();
-			formatterSettings.Add("includeVersions", _versioning == Versioning.Strict);
-			formatterSettings.Add("strictBinding", _versioning == Versioning.Strict);
+			var formatterSettings = new Hashtable
+            {
+                { "includeVersions", _versioning == Versioning.Strict },
+                { "strictBinding", _versioning == Versioning.Strict }
+            };
 
 			ClientSinkChain.Add(new SafeBinaryClientFormatterSinkProvider(formatterSettings, null));
 			ServerSinkChain.Add(new SafeBinaryServerFormatterSinkProvider(formatterSettings, null) { TypeFilterLevel = TypeFilterLevel.Full });
@@ -176,85 +148,6 @@ namespace Zyan.Communication.GenuineChannels
 			AuthenticationProvider = authProvider;
 		}
 
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="ipAddress">IP address to bind</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			IpAddress = ipAddress;
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="ipAddress">IP address to bind</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			IpAddress = ipAddress;
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
 		/// <summary>
 		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
 		/// </summary>
@@ -315,92 +208,6 @@ namespace Zyan.Communication.GenuineChannels
 			TcpPort = tcpPort;
 			AuthenticationProvider = authProvider;
 			Encryption = encryption;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool encryption, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="ipAddress">IP address to bind</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			IpAddress = ipAddress;
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool encryption, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="ipAddress">IP address to bind</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			IpAddress = ipAddress;
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
 		}
 
 		/// <summary>
@@ -471,100 +278,6 @@ namespace Zyan.Communication.GenuineChannels
 			AuthenticationProvider = authProvider;
 			Encryption = encryption;
 			Algorithm = algorithm;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			Algorithm = algorithm;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="ipAddress">IP address to bind</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			IpAddress = ipAddress;
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			Algorithm = algorithm;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			Algorithm = algorithm;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="ipAddress">IP address to bind</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			IpAddress = ipAddress;
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			Algorithm = algorithm;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
 		}
 
 		/// <summary>
@@ -646,108 +359,6 @@ namespace Zyan.Communication.GenuineChannels
 		}
 
 		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-		/// <param name="oaep">Specifies if OAEP padding should be activated</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			Algorithm = algorithm;
-			Oaep = oaep;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="ipAddress">IP address to bind</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-		/// <param name="oaep">Specifies if OAEP padding should be activated</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			IpAddress = ipAddress;
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			Algorithm = algorithm;
-			Oaep = oaep;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-		/// <param name="oaep">Specifies if OAEP padding should be activated</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			Algorithm = algorithm;
-			Oaep = oaep;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpServerProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="ipAddress">IP address to bind</param>
-		/// <param name="tcpPort">TCP port number</param>
-		/// <param name="authProvider">Authentication provider</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-		/// <param name="oaep">Specifies if OAEP padding should be activated</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			IpAddress = ipAddress;
-			TcpPort = tcpPort;
-			AuthenticationProvider = authProvider;
-			Encryption = encryption;
-			Algorithm = algorithm;
-			Oaep = oaep;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
 		/// Creates and configures a Remoting channel.
 		/// </summary>
 		/// <returns>Remoting channel</returns>
@@ -760,12 +371,7 @@ namespace Zyan.Communication.GenuineChannels
 				_channelSettings["name"] = _channelName;
 				_channelSettings["port"] = _tcpPort;
 				_channelSettings["interface"] = _ipAddress;
-				//_channelSettings["bindTo"] = _ipAddress;
-				//_channelSettings["listen"] = true;
 				_channelSettings["typeFilterLevel"] = TypeFilterLevel.Full;
-				//_channelSettings["keepAliveEnabled"] = _tcpKeepAliveEnabled;
-				//_channelSettings["keepAliveTime"] = _tcpKeepAliveTime;
-				//_channelSettings["keepAliveInterval"] = _tcpKeepAliveInterval;
 
 				ConfigureEncryption();
 				ConfigureCompression();

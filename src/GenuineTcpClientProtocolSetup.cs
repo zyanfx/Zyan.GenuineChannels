@@ -14,37 +14,6 @@ namespace Zyan.Communication.GenuineChannels
 	/// </summary>
 	public sealed class GenuineTcpClientProtocolSetup : CustomClientProtocolSetup, IClientProtocolSetup
 	{
-		private bool _tcpKeepAliveEnabled = true;
-		private ulong _tcpKeepAliveTime = 30000;
-		private ulong _tcpKeepAliveInterval = 1000;
-
-		/// <summary>
-		/// Enables or disables TCP KeepAlive.
-		/// </summary>
-		public bool TcpKeepAliveEnabled
-		{
-			get { return _tcpKeepAliveEnabled; }
-			set { _tcpKeepAliveEnabled = value; }
-		}
-
-		/// <summary>
-		/// Gets or sets the TCP KeepAlive time in milliseconds.
-		/// </summary>
-		public ulong TcpKeepAliveTime
-		{
-			get { return _tcpKeepAliveTime; }
-			set { _tcpKeepAliveTime = value; }
-		}
-
-		/// <summary>
-		/// Gets or sets the TCP KeepAlive interval in milliseconds
-		/// </summary>
-		public ulong TcpKeepAliveInterval
-		{
-			get { return _tcpKeepAliveInterval; }
-			set { _tcpKeepAliveInterval = value; }
-		}
-
 		/// <summary>
 		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
@@ -99,39 +68,6 @@ namespace Zyan.Communication.GenuineChannels
 		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(bool encryption, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			Encryption = encryption;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			Encryption = encryption;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
 		public GenuineTcpClientProtocolSetup(bool encryption, string algorithm)
 			: this()
@@ -151,43 +87,6 @@ namespace Zyan.Communication.GenuineChannels
 		{
 			Encryption = encryption;
 			Algorithm = algorithm;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(bool encryption, string algorithm, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			Encryption = encryption;
-			Algorithm = algorithm;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			Encryption = encryption;
-			Algorithm = algorithm;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
 		}
 
 		/// <summary>
@@ -224,47 +123,6 @@ namespace Zyan.Communication.GenuineChannels
 		/// </summary>
 		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
 		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-		/// <param name="maxAttempts">Maximum number of connection attempts</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(bool encryption, string algorithm, int maxAttempts, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			Encryption = encryption;
-			Algorithm = algorithm;
-			MaxAttempts = maxAttempts;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-		/// <param name="maxAttempts">Maximum number of connection attempts</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, int maxAttempts, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			Encryption = encryption;
-			Algorithm = algorithm;
-			MaxAttempts = maxAttempts;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
 		/// <param name="oaep">Specifies if OAEP padding should be activated</param>
 		public GenuineTcpClientProtocolSetup(bool encryption, string algorithm, bool oaep)
 			: this()
@@ -287,47 +145,6 @@ namespace Zyan.Communication.GenuineChannels
 			Encryption = encryption;
 			Algorithm = algorithm;
 			Oaep = oaep;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-		/// <param name="oaep">Specifies if OAEP padding should be activated</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(bool encryption, string algorithm, bool oaep, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			Encryption = encryption;
-			Algorithm = algorithm;
-			Oaep = oaep;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-		/// <param name="oaep">Specifies if OAEP padding should be activated</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, bool oaep, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			Encryption = encryption;
-			Algorithm = algorithm;
-			Oaep = oaep;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
 		}
 
 		/// <summary>
@@ -361,51 +178,6 @@ namespace Zyan.Communication.GenuineChannels
 			Algorithm = algorithm;
 			MaxAttempts = maxAttempts;
 			Oaep = oaep;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-		/// <param name="maxAttempts">Maximum number of connection attempts</param>
-		/// <param name="oaep">Specifies if OAEP padding should be activated</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(bool encryption, string algorithm, int maxAttempts, bool oaep, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this()
-		{
-			Encryption = encryption;
-			Algorithm = algorithm;
-			MaxAttempts = maxAttempts;
-			Oaep = oaep;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
-		}
-
-		/// <summary>
-		/// Creates a new instance of the GenuineTcpClientProtocolSetup class.
-		/// </summary>
-		/// <param name="versioning">Versioning behavior</param>
-		/// <param name="encryption">Specifies if the communication sould be encrypted</param>
-		/// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-		/// <param name="maxAttempts">Maximum number of connection attempts</param>
-		/// <param name="oaep">Specifies if OAEP padding should be activated</param>
-		/// <param name="keepAlive">Enables or disables TCP KeepAlive for the new connection</param>
-		/// <param name="keepAliveTime">Time for TCP KeepAlive in Milliseconds</param>
-		/// <param name="KeepAliveInterval">Interval for TCP KeepAlive in Milliseconds</param>
-		public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, int maxAttempts, bool oaep, bool keepAlive, ulong keepAliveTime, ulong KeepAliveInterval)
-			: this(versioning)
-		{
-			Encryption = encryption;
-			Algorithm = algorithm;
-			MaxAttempts = maxAttempts;
-			Oaep = oaep;
-			TcpKeepAliveEnabled = keepAlive;
-			TcpKeepAliveTime = keepAliveTime;
-			TcpKeepAliveInterval = KeepAliveInterval;
 		}
 
 		/// <summary>
@@ -461,11 +233,7 @@ namespace Zyan.Communication.GenuineChannels
 			{
 				_channelSettings["name"] = _channelName;
 				_channelSettings["port"] = 0;
-				//_channelSettings["listen"] = false;
 				_channelSettings["typeFilterLevel"] = TypeFilterLevel.Full;
-				//_channelSettings["keepAliveEnabled"] = _tcpKeepAliveEnabled;
-				//_channelSettings["keepAliveTime"] = _tcpKeepAliveTime;
-				//_channelSettings["keepAliveInterval"] = _tcpKeepAliveInterval;
 
 				ConfigureEncryption();
 				ConfigureCompression();
