@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Serialization.Formatters;
-using Belikov.GenuineChannels.GenuineTcp;
+using Belikov.GenuineChannels.GenuineUdp;
 using Zyan.Communication.ChannelSinks.ClientAddress;
 using Zyan.Communication.Protocols;
 using Zyan.Communication.Security;
@@ -15,9 +15,9 @@ using Manager = Zyan.Communication.Protocols.Tcp.DuplexChannel.Manager;
 namespace Zyan.Communication.GenuineChannels
 {
     /// <summary>
-    /// Server protocol setup for bi-directional GenuineTcp communication with support for user defined authentication and security.
+    /// Server protocol setup for bi-directional GenuineUdp communication with support for user defined authentication and security.
     /// </summary>
-    public sealed class GenuineTcpServerProtocolSetup : CustomServerProtocolSetup
+    public sealed class GenuineUdpServerProtocolSetup : CustomServerProtocolSetup
     {
         private int _tcpPort = 0;
         private string _ipAddress = "0.0.0.0";
@@ -47,11 +47,11 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
-        public GenuineTcpServerProtocolSetup(Versioning versioning)
-            : base((settings, clientSinkChain, serverSinkChain) => new GenuineTcpChannel(settings, clientSinkChain, serverSinkChain))
+        public GenuineUdpServerProtocolSetup(Versioning versioning)
+            : base((settings, clientSinkChain, serverSinkChain) => new GenuineUdpChannel(settings, clientSinkChain, serverSinkChain))
         {
             _versioning = versioning;
 
@@ -67,28 +67,28 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
-        public GenuineTcpServerProtocolSetup()
+        public GenuineUdpServerProtocolSetup()
             : this(Versioning.Strict)
         { }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="tcpPort">TCP port number</param>
-        public GenuineTcpServerProtocolSetup(int tcpPort)
+        public GenuineUdpServerProtocolSetup(int tcpPort)
             : this()
         {
             TcpPort = tcpPort;
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="ipAddress">IP address to bind</param>
         /// <param name="tcpPort">TCP port number</param>
-        public GenuineTcpServerProtocolSetup(string ipAddress, int tcpPort)
+        public GenuineUdpServerProtocolSetup(string ipAddress, int tcpPort)
             : this()
         {
             IpAddress = ipAddress;
@@ -96,11 +96,11 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
-        public GenuineTcpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider)
+        public GenuineUdpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider)
             : this()
         {
             TcpPort = tcpPort;
@@ -108,12 +108,12 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="ipAddress">IP address to bind</param>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
-        public GenuineTcpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider)
+        public GenuineUdpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider)
             : this()
         {
             IpAddress = ipAddress;
@@ -122,25 +122,26 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
-        public GenuineTcpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider)
+        public GenuineUdpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider)
             : this(versioning)
         {
             TcpPort = tcpPort;
             AuthenticationProvider = authProvider;
         }
+
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="ipAddress">IP address to bind</param>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
-        public GenuineTcpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider)
+        public GenuineUdpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider)
             : this(versioning)
         {
             IpAddress = ipAddress;
@@ -149,12 +150,12 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
-        public GenuineTcpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool encryption)
+        public GenuineUdpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool encryption)
             : this()
         {
             TcpPort = tcpPort;
@@ -163,13 +164,13 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="ipAddress">IP address to bind</param>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
-        public GenuineTcpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption)
+        public GenuineUdpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption)
             : this()
         {
             IpAddress = ipAddress;
@@ -179,13 +180,13 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
-        public GenuineTcpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool encryption)
+        public GenuineUdpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool encryption)
             : this(versioning)
         {
             TcpPort = tcpPort;
@@ -194,14 +195,14 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="ipAddress">IP address to bind</param>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
-        public GenuineTcpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption)
+        public GenuineUdpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption)
             : this(versioning)
         {
             IpAddress = ipAddress;
@@ -211,13 +212,13 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-        public GenuineTcpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm)
+        public GenuineUdpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm)
             : this()
         {
             TcpPort = tcpPort;
@@ -227,14 +228,14 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="ipAddress">IP address to bind</param>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-        public GenuineTcpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm)
+        public GenuineUdpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm)
             : this()
         {
             IpAddress = ipAddress;
@@ -245,14 +246,14 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-        public GenuineTcpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm)
+        public GenuineUdpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm)
             : this(versioning)
         {
             TcpPort = tcpPort;
@@ -262,7 +263,7 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="ipAddress">IP address to bind</param>
@@ -270,7 +271,7 @@ namespace Zyan.Communication.GenuineChannels
         /// <param name="authProvider">Authentication provider</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
-        public GenuineTcpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm)
+        public GenuineUdpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm)
             : this(versioning)
         {
             IpAddress = ipAddress;
@@ -281,14 +282,14 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="authProvider">Authentication provider</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
         /// <param name="oaep">Specifies if OAEP padding should be activated</param>
-        public GenuineTcpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep)
+        public GenuineUdpServerProtocolSetup(int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep)
             : this()
         {
             TcpPort = tcpPort;
@@ -299,7 +300,7 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="tcpPort">TCP port number</param>
         /// <param name="ipAddress">IP address to bind</param>
@@ -307,7 +308,7 @@ namespace Zyan.Communication.GenuineChannels
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
         /// <param name="oaep">Specifies if OAEP padding should be activated</param>
-        public GenuineTcpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep)
+        public GenuineUdpServerProtocolSetup(string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep)
             : this()
         {
             IpAddress = ipAddress;
@@ -319,7 +320,7 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="tcpPort">TCP port number</param>
@@ -327,7 +328,7 @@ namespace Zyan.Communication.GenuineChannels
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
         /// <param name="oaep">Specifies if OAEP padding should be activated</param>
-        public GenuineTcpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep)
+        public GenuineUdpServerProtocolSetup(Versioning versioning, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep)
             : this(versioning)
         {
             TcpPort = tcpPort;
@@ -338,7 +339,7 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpServerProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpServerProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="ipAddress">IP address to bind</param>
@@ -347,7 +348,7 @@ namespace Zyan.Communication.GenuineChannels
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Encryption algorithm (e.G. "3DES")</param>
         /// <param name="oaep">Specifies if OAEP padding should be activated</param>
-        public GenuineTcpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep)
+        public GenuineUdpServerProtocolSetup(Versioning versioning, string ipAddress, int tcpPort, IAuthenticationProvider authProvider, bool encryption, string algorithm, bool oaep)
             : this(versioning)
         {
             IpAddress = ipAddress;
@@ -370,7 +371,7 @@ namespace Zyan.Communication.GenuineChannels
             {
                 _channelSettings["name"] = _channelName;
                 _channelSettings["port"] = _tcpPort;
-                _channelSettings["interface"] = _ipAddress;
+                _channelSettings["Address"] = _ipAddress;
                 _channelSettings["typeFilterLevel"] = TypeFilterLevel.Full;
 
                 ConfigureEncryption();

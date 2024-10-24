@@ -10,18 +10,18 @@ using Zyan.SafeDeserializationHelpers.Channels;
 namespace Zyan.Communication.GenuineChannels
 {
     /// <summary>
-    /// Client protocol setup for bi-directional GenuineTcp communication with support for user defined authentication and security.
+    /// Client protocol setup for bi-directional GenuineUdp communication with support for user defined authentication and security.
     /// </summary>
-    public sealed class GenuineTcpClientProtocolSetup : CustomClientProtocolSetup, IClientProtocolSetup
+    public sealed class GenuineUdpClientProtocolSetup : CustomClientProtocolSetup, IClientProtocolSetup
     {
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
-        public GenuineTcpClientProtocolSetup(Versioning versioning)
+        public GenuineUdpClientProtocolSetup(Versioning versioning)
             : base((settings, clientSinkChain, serverSinkChain) => new GenuineTcpChannel(settings, clientSinkChain, serverSinkChain))
         {
-            _channelName = "GenuineTcpClientProtocolSetup" + Guid.NewGuid().ToString();
+            _channelName = "GenuineUdpClientProtocolSetup" + Guid.NewGuid().ToString();
             _versioning = versioning;
 
             var formatterSettings = new Hashtable
@@ -35,41 +35,41 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
-        public GenuineTcpClientProtocolSetup()
+        public GenuineUdpClientProtocolSetup()
             : this(Versioning.Strict)
         {
-            _channelName = "GenuineTcpClientProtocolSetup" + Guid.NewGuid().ToString();
+            _channelName = "GenuineUdpClientProtocolSetup" + Guid.NewGuid().ToString();
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
-        public GenuineTcpClientProtocolSetup(bool encryption)
+        public GenuineUdpClientProtocolSetup(bool encryption)
             : this()
         {
             Encryption = encryption;
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
-        public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption)
+        public GenuineUdpClientProtocolSetup(Versioning versioning, bool encryption)
             : this(versioning)
         {
             Encryption = encryption;
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-        public GenuineTcpClientProtocolSetup(bool encryption, string algorithm)
+        public GenuineUdpClientProtocolSetup(bool encryption, string algorithm)
             : this()
         {
             Encryption = encryption;
@@ -77,12 +77,12 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
-        public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm)
+        public GenuineUdpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm)
             : this(versioning)
         {
             Encryption = encryption;
@@ -90,12 +90,12 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
         /// <param name="maxAttempts">Maximum number of connection attempts</param>
-        public GenuineTcpClientProtocolSetup(bool encryption, string algorithm, int maxAttempts)
+        public GenuineUdpClientProtocolSetup(bool encryption, string algorithm, int maxAttempts)
             : this()
         {
             Encryption = encryption;
@@ -104,13 +104,13 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
         /// <param name="maxAttempts">Maximum number of connection attempts</param>
-        public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, int maxAttempts)
+        public GenuineUdpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, int maxAttempts)
             : this(versioning)
         {
             Encryption = encryption;
@@ -119,12 +119,12 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
         /// <param name="oaep">Specifies if OAEP padding should be activated</param>
-        public GenuineTcpClientProtocolSetup(bool encryption, string algorithm, bool oaep)
+        public GenuineUdpClientProtocolSetup(bool encryption, string algorithm, bool oaep)
             : this()
         {
             Encryption = encryption;
@@ -133,13 +133,13 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
         /// <param name="oaep">Specifies if OAEP padding should be activated</param>
-        public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, bool oaep)
+        public GenuineUdpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, bool oaep)
             : this(versioning)
         {
             Encryption = encryption;
@@ -148,13 +148,13 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
         /// <param name="maxAttempts">Maximum number of connection attempts</param>
         /// <param name="oaep">Specifies if OAEP padding should be activated</param>
-        public GenuineTcpClientProtocolSetup(bool encryption, string algorithm, int maxAttempts, bool oaep)
+        public GenuineUdpClientProtocolSetup(bool encryption, string algorithm, int maxAttempts, bool oaep)
             : this()
         {
             Encryption = encryption;
@@ -164,14 +164,14 @@ namespace Zyan.Communication.GenuineChannels
         }
 
         /// <summary>
-        /// Creates a new instance of the GenuineTcpClientProtocolSetup class.
+        /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         /// <param name="encryption">Specifies if the communication sould be encrypted</param>
         /// <param name="algorithm">Symmetric encryption algorithm (e.G. "3DES")</param>
         /// <param name="maxAttempts">Maximum number of connection attempts</param>
         /// <param name="oaep">Specifies if OAEP padding should be activated</param>
-        public GenuineTcpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, int maxAttempts, bool oaep)
+        public GenuineUdpClientProtocolSetup(Versioning versioning, bool encryption, string algorithm, int maxAttempts, bool oaep)
             : this(versioning)
         {
             Encryption = encryption;
@@ -206,7 +206,7 @@ namespace Zyan.Communication.GenuineChannels
             if (parts == null || parts.Length < 3)
                 throw new ArgumentException(GetType().Name + " requires three arguments for URL: server address, port number and ZyanHost name.");
 
-            return string.Format("gtcp://{0}:{1}/{2}", parts);
+            return string.Format("gudp://{0}:{1}/{2}", parts);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Zyan.Communication.GenuineChannels
         /// </returns>
         public override bool IsUrlValid(string url)
         {
-            return base.IsUrlValid(url) && url.StartsWith("gtcp");
+            return base.IsUrlValid(url) && url.StartsWith("gudp");
         }
 
         /// <summary>
