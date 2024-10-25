@@ -29,9 +29,12 @@ namespace Zyan.Communication
                 case "duplexchannel":
                     return () => new TcpDuplexClientProtocolSetup(encryption: encryption);
 
+                case "":
                 case "tcp":
                 case "tcpchannel":
-                    return () => new TcpCustomClientProtocolSetup(encryption: encryption);
+                    return duplex ? new Func<ClientProtocolSetup>(
+                        () => new TcpDuplexClientProtocolSetup(encryption: encryption)) :
+                        () => new TcpCustomClientProtocolSetup(encryption: encryption);
 
                 case "gtcp":
                 case "genuine":
@@ -44,11 +47,6 @@ namespace Zyan.Communication
                 case "genuineudp":
                 case "genuineudpchannel":
                     return () => new GenuineUdpClientProtocolSetup(encryption: encryption);
-
-                case "":
-                    return duplex ? new Func<ClientProtocolSetup>(
-                        () => new TcpDuplexClientProtocolSetup(encryption: encryption)) :
-                        () => new TcpCustomClientProtocolSetup(encryption: encryption);
 
                 default:
                     throw new NotSupportedException("Client protocol not supported: " + name);
@@ -87,7 +85,10 @@ namespace Zyan.Communication
 
                 case "tcp":
                 case "tcpchannel":
-                    return new TcpCustomServerProtocolSetup(port, authProvider, encryption: encryption);
+                case "":
+                    return duplex ?
+                        new TcpDuplexServerProtocolSetup(port, authProvider, encryption: encryption) as ServerProtocolSetup :
+                        new TcpCustomServerProtocolSetup(port, authProvider, encryption: encryption);
 
                 case "gtcp":
                 case "genuine":
@@ -100,11 +101,6 @@ namespace Zyan.Communication
                 case "genuineudp":
                 case "genuineudpchannel":
                     return new GenuineUdpServerProtocolSetup(port, authProvider, encryption: encryption);
-
-                case "":
-                    return duplex ?
-                        new TcpDuplexServerProtocolSetup(port, authProvider, encryption: encryption) as ServerProtocolSetup:
-                        new TcpCustomServerProtocolSetup(port, authProvider, encryption: encryption);
 
                 default:
                     throw new NotSupportedException("Server protocol not supported: " + name);
