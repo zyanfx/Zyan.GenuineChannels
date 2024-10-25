@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Serialization.Formatters;
-using Belikov.GenuineChannels.GenuineTcp;
+using Belikov.GenuineChannels.GenuineUdp;
 using Zyan.Communication.Protocols;
 using Zyan.Communication.Toolbox;
 using Zyan.SafeDeserializationHelpers.Channels;
@@ -14,12 +14,23 @@ namespace Zyan.Communication.GenuineChannels
     /// </summary>
     public sealed class GenuineUdpClientProtocolSetup : CustomClientProtocolSetup, IClientProtocolSetup
     {
+        private string _ipAddress = "0.0.0.0";
+
+        /// <summary>
+        /// Gets or sets the IP Address to listen for client calls.
+        /// </summary>
+        public string IpAddress
+        {
+            get { return _ipAddress; }
+            set { _ipAddress = value; }
+        }
+
         /// <summary>
         /// Creates a new instance of the GenuineUdpClientProtocolSetup class.
         /// </summary>
         /// <param name="versioning">Versioning behavior</param>
         public GenuineUdpClientProtocolSetup(Versioning versioning)
-            : base((settings, clientSinkChain, serverSinkChain) => new GenuineTcpChannel(settings, clientSinkChain, serverSinkChain))
+            : base((settings, clientSinkChain, serverSinkChain) => new GenuineUdpChannel(settings, clientSinkChain, serverSinkChain))
         {
             _channelName = "GenuineUdpClientProtocolSetup" + Guid.NewGuid().ToString();
             _versioning = versioning;
@@ -234,6 +245,14 @@ namespace Zyan.Communication.GenuineChannels
                 _channelSettings["name"] = _channelName;
                 _channelSettings["port"] = 0;
                 _channelSettings["typeFilterLevel"] = TypeFilterLevel.Full;
+                
+                // the channel requires Address specified as gudp://0.0.0.0
+                if (!string.IsNullOrWhiteSpace(_ipAddress))
+                {
+                    _channelSettings["Address"] =
+                        _ipAddress.StartsWith("gudp://", StringComparison.OrdinalIgnoreCase) ?
+                        _ipAddress : "gudp://" + _ipAddress;
+                }
 
                 ConfigureEncryption();
                 ConfigureCompression();
