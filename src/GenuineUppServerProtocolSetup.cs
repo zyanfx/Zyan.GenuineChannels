@@ -371,8 +371,15 @@ namespace Zyan.Communication.GenuineChannels
             {
                 _channelSettings["name"] = _channelName;
                 _channelSettings["port"] = _tcpPort;
-                _channelSettings["Address"] = _ipAddress;
                 _channelSettings["typeFilterLevel"] = TypeFilterLevel.Full;
+
+                // the channel requires Address specified as gudp://0.0.0.0
+                if (!string.IsNullOrWhiteSpace(_ipAddress))
+                {
+                    _channelSettings["Address"] =
+                        _ipAddress.StartsWith("gudp://", StringComparison.OrdinalIgnoreCase) ?
+                        _ipAddress : "gudp://" + _ipAddress;
+                }
 
                 ConfigureEncryption();
                 ConfigureCompression();
