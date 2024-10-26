@@ -372,6 +372,8 @@ namespace Zyan.Communication.GenuineChannels
                 _channelSettings["name"] = _channelName;
                 _channelSettings["port"] = _tcpPort;
                 _channelSettings["typeFilterLevel"] = TypeFilterLevel.Full;
+                _channelSettings["InvocationTimeout"] = TimeSpan.FromDays(10);
+                _channelSettings["ConnectTimeout"] = TimeSpan.FromDays(10);
 
                 // the channel requires Address specified as gudp://0.0.0.0
                 if (!string.IsNullOrWhiteSpace(_ipAddress))

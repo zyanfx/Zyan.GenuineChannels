@@ -372,6 +372,8 @@ namespace Zyan.Communication.GenuineChannels
                 _channelSettings["port"] = _tcpPort;
                 _channelSettings["interface"] = _ipAddress;
                 _channelSettings["typeFilterLevel"] = TypeFilterLevel.Full;
+                _channelSettings["InvocationTimeout"] = TimeSpan.FromDays(10);
+                _channelSettings["ConnectTimeout"] = TimeSpan.FromDays(10);
 
                 ConfigureEncryption();
                 ConfigureCompression();

@@ -234,6 +234,8 @@ namespace Zyan.Communication.GenuineChannels
                 _channelSettings["name"] = _channelName;
                 _channelSettings["port"] = 0;
                 _channelSettings["typeFilterLevel"] = TypeFilterLevel.Full;
+                _channelSettings["InvocationTimeout"] = TimeSpan.FromDays(10);
+                _channelSettings["ConnectTimeout"] = TimeSpan.FromDays(10);
 
                 ConfigureEncryption();
                 ConfigureCompression();
