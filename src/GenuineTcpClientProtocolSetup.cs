@@ -3,6 +3,7 @@ using System.Collections;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Serialization.Formatters;
 using Belikov.GenuineChannels.GenuineTcp;
+using Belikov.GenuineChannels.Parameters;
 using Zyan.Communication.Protocols;
 using Zyan.Communication.Toolbox;
 using Zyan.SafeDeserializationHelpers.Channels;
@@ -234,8 +235,6 @@ namespace Zyan.Communication.GenuineChannels
                 _channelSettings["name"] = _channelName;
                 _channelSettings["port"] = 0;
                 _channelSettings["typeFilterLevel"] = TypeFilterLevel.Full;
-                _channelSettings["InvocationTimeout"] = TimeSpan.FromDays(10);
-                _channelSettings["ConnectTimeout"] = TimeSpan.FromDays(10);
 
                 ConfigureEncryption();
                 ConfigureCompression();
@@ -245,6 +244,9 @@ namespace Zyan.Communication.GenuineChannels
 
                 channel = _channelFactory(_channelSettings, BuildClientSinkChain(), BuildServerSinkChain());
                 RemotingHelper.ResetCustomErrorsMode();
+
+                var ctx = (channel as GenuineTcpChannel).ITransportContext;
+                ctx.IParameterProvider[GenuineParameter.InvocationTimeout] = TimeSpan.FromDays(10);
             }
 
             return channel;
