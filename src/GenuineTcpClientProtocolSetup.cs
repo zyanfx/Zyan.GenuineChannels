@@ -190,10 +190,8 @@ namespace Zyan.Communication.GenuineChannels
         /// <returns>
         /// Formatted URL supported by the protocol.
         /// </returns>
-        public string FormatUrl(string serverAddress, int portNumber, string zyanHostName)
-        {
-            return (this as IClientProtocolSetup).FormatUrl(serverAddress, portNumber, zyanHostName);
-        }
+        public string FormatUrl(string serverAddress, int portNumber, string zyanHostName) =>
+            FormatUrlCore(serverAddress, portNumber, zyanHostName);
 
         /// <summary>
         /// Formats the connection URL for this protocol.
@@ -202,10 +200,20 @@ namespace Zyan.Communication.GenuineChannels
         /// <returns>
         /// Formatted URL supported by the protocol.
         /// </returns>
-        string IClientProtocolSetup.FormatUrl(params object[] parts)
+        string IClientProtocolSetup.FormatUrl(params object[] parts) =>
+            FormatUrlCore(parts);
+
+        /// <summary>
+        /// Formats the connection URL for this protocol.
+        /// </summary>
+        /// <param name="parts">The parts of the url, such as server name, port, etc.</param>
+        /// <returns>
+        /// Formatted URL supported by the protocol.
+        /// </returns>
+        internal static string FormatUrlCore(params object[] parts)
         {
             if (parts == null || parts.Length < 3)
-                throw new ArgumentException(GetType().Name + " requires three arguments for URL: server address, port number and ZyanHost name.");
+                throw new ArgumentException("Protocol setup requires three arguments for URL: server address, port number and ZyanHost name.");
 
             return string.Format("gtcp://{0}:{1}/{2}", parts);
         }
@@ -260,10 +268,7 @@ namespace Zyan.Communication.GenuineChannels
         /// <summary>
         /// Gets or sets the versioning behavior.
         /// </summary>
-        private Versioning Versioning
-        {
-            get { return _versioning; }
-        }
+        public Versioning Versioning => _versioning;
 
         #endregion
     }

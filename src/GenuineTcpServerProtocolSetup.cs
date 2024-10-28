@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Serialization.Formatters;
+using System.Security.Policy;
 using Belikov.GenuineChannels.GenuineTcp;
 using Belikov.GenuineChannels.Parameters;
 using Zyan.Communication.ChannelSinks.ClientAddress;
@@ -395,10 +396,14 @@ namespace Zyan.Communication.GenuineChannels
         private static Lazy<HashSet<string>> LocalAddresses = new Lazy<HashSet<string>>(() =>
             new HashSet<string>(Manager.GetAddresses().Select(id => id.ToString())));
 
-        /// <summary>
-        /// Determines whether the given URL is discoverable across the network.
-        /// </summary>
-        /// <param name="url">The URL to check.</param>
+        /// <inheritdoc/>
+        public override string GetDiscoverableUrl(string zyanHostName)
+        {
+            var host = LocalAddresses.Value.FirstOrDefault() ?? "127.0.0.1";
+            return GenuineTcpClientProtocolSetup.FormatUrlCore(host, TcpPort, zyanHostName);
+        }
+
+        /// <inheritdoc/>
         protected override bool IsDiscoverableUrl(string url)
         {
             if (!base.IsDiscoverableUrl(url))
@@ -418,10 +423,7 @@ namespace Zyan.Communication.GenuineChannels
         /// <summary>
         /// Gets or sets the versioning behavior.
         /// </summary>
-        private Versioning Versioning
-        {
-            get { return _versioning; }
-        }
+        public Versioning Versioning => _versioning;
 
         #endregion
     }
