@@ -23,33 +23,23 @@ namespace Zyan.Communication
             switch (LowerCase(name))
             {
                 case "tcpex":
-                case "tcpexchannel":
-                case "duplex":
-                case "tcpduplex":
-                case "duplexchannel":
                     return () => new TcpDuplexClientProtocolSetup(encryption: encryption);
 
-                case "":
                 case "tcp":
-                case "tcpchannel":
+                case "":
                     return duplex ? new Func<ClientProtocolSetup>(
                         () => new TcpDuplexClientProtocolSetup(encryption: encryption)) :
                         () => new TcpCustomClientProtocolSetup(encryption: encryption);
 
                 case "gtcp":
-                case "genuine":
-                case "genuinechannel":
-                case "genuinetcp":
-                case "genuinetcpchannel":
                     return () => new GenuineTcpClientProtocolSetup(encryption: encryption);
 
                 case "gudp":
-                case "genuineudp":
-                case "genuineudpchannel":
                     return () => new GenuineUdpClientProtocolSetup(encryption: encryption);
 
                 default:
-                    throw new NotSupportedException("Client protocol not supported: " + name);
+                    throw new NotSupportedException("Client protocol not supported: " + name +
+                        ". Valid values: tcp, tcpex, gtcp, gudp.");
             }
         }
 
@@ -77,33 +67,23 @@ namespace Zyan.Communication
             switch (LowerCase(name))
             {
                 case "tcpex":
-                case "tcpexchannel":
-                case "duplex":
-                case "tcpduplex":
-                case "duplexchannel":
                     return new TcpDuplexServerProtocolSetup(port, authProvider, encryption: encryption);
 
                 case "tcp":
-                case "tcpchannel":
                 case "":
                     return duplex ?
                         new TcpDuplexServerProtocolSetup(port, authProvider, encryption: encryption) as ServerProtocolSetup :
                         new TcpCustomServerProtocolSetup(port, authProvider, encryption: encryption);
 
                 case "gtcp":
-                case "genuine":
-                case "genuinechannel":
-                case "genuinetcp":
-                case "genuinetcpchannel":
                     return new GenuineTcpServerProtocolSetup(port, authProvider, encryption: encryption);
 
                 case "gudp":
-                case "genuineudp":
-                case "genuineudpchannel":
                     return new GenuineUdpServerProtocolSetup(port, authProvider, encryption: encryption);
 
                 default:
-                    throw new NotSupportedException("Server protocol not supported: " + name);
+                    throw new NotSupportedException("Server protocol not supported: " + name +
+                        ". Valid values: tcp, tcpex, gtcp, gudp.");
             }
         }
         internal static string LowerCase(this string text)
