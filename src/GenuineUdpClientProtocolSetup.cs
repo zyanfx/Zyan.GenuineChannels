@@ -267,6 +267,7 @@ namespace Zyan.Communication.GenuineChannels
 
                 var ctx = (channel as GenuineUdpChannel).ITransportContext;
                 ctx.IParameterProvider[GenuineParameter.InvocationTimeout] = TimeSpan.FromDays(10);
+                ctx.IParameterProvider[GenuineParameter.NoSizeChecking] = true;
             }
 
             return channel;
